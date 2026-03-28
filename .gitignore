@@ -1,0 +1,37 @@
+# IDE / Editor Files
+.cursor/
+.vscode/
+.agent-mem/
+.brainsync/
+.antigravity/
+.windsurfrules
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# Language / Runtime Files
+node_modules/
+__pycache__/
+*.pyc
+venv/
+.env
+
+# Temporary Clones & Copies
+temp-*/
+.agents_/
+.agents copy/
+.agent/
+
+# Logs and Temp Files
+*.log
+tmp/
+dist/
+build/
+
+# Auto-generated agent rules (personalized per developer)
+.brainsync/agent-rules.md
+
+# Sensitive files
+AGENT.md
+CLAUDE.md
