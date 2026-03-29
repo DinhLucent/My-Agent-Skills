@@ -1,4 +1,4 @@
-# 🏢 MyAgentSkills — Trung Tâm Điều Hành Agent AI
+# 🏢 LucentDinhCompany — Trung Tâm Điều Hành Agent AI
 
 > **Mục tiêu:** Biến session AI của bạn thành một phòng ban phát triển phần mềm chuyên nghiệp.
 > **Version:** 3.1 | **Framework:** Diamond Standard + Task Hub
@@ -19,7 +19,7 @@
 
 ## 1. Tổng quan
 
-**MyAgentSkills** là **Trụ sở chính (HQ)** của một đội ngũ AI Agent chuyên nghiệp. Thay vì một AI đơn lẻ làm mọi việc, hệ thống cung cấp **27 "nhân viên" AI** với Persona và kỹ năng riêng biệt.
+**LucentDinhCompany** là **Trụ sở chính (HQ)** của một đội ngũ AI Agent chuyên nghiệp. Thay vì một AI đơn lẻ làm mọi việc, hệ thống cung cấp **27 "nhân viên" AI** với Persona và kỹ năng riêng biệt.
 
 Bạn vẫn là CEO — người ra quyết định cuối cùng.
 
@@ -33,7 +33,7 @@ Bạn vẫn là CEO — người ra quyết định cuối cùng.
 ## 2. Kiến trúc hệ thống
 
 ```
-MyAgentSkills/
+LucentDinhCompany/
 ├── manifest.yaml           ← Sổ cái nhân sự (Agent → Persona → Skills)
 ├── DASHBOARD.md            ← 📊 Quick Context + Task Board + Timeline
 ├── ONBOARDING.md           ← Checklist nhận việc cho Agent mới
@@ -130,7 +130,7 @@ TODO → CLAIMED → IN_PROGRESS → IN_REVIEW → DONE
 ### Bước 1: Clone vào dự án
 
 ```bash
-git clone https://github.com/<your-username>/MyAgentSkills.git .agents-skills
+git clone https://github.com/<your-username>/LucentDinhCompany.git .agents-skills
 ```
 
 ### Bước 2: Chọn đội hình

@@ -19,7 +19,7 @@ When this skill is triggered, you must execute the entire security pipeline defi
 5. **Reporting**: Produce a categorized vulnerability report.
 
 ## 🏗️ Structure & References
-- **Workflow Detail**: [workflow.md](file:///d:/MyProject/MyAgentSkills/Skills/Roles/Specialist/deep-scan/workflow.md)
+- **Workflow Detail**: [workflow.md](file:///d:/MyProject/LucentDinhCompany/Skills/Roles/Specialist/deep-scan/workflow.md)
 
 ## 📖 Usage Examples
 

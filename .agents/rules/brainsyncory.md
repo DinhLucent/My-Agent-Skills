@@ -1,7 +1,7 @@
 
 
 # Project Memory — My-Agent-Skills
-> 91 notes | Score threshold: >40
+> 174 notes | Score threshold: >40
 
 ## Safety — Never Run Destructive Commands
 
@@ -18,24 +18,30 @@
 
 **Stack:** Unknown stack
 
-## 📝 NOTE: 1 uncommitted file(s) in working tree.\n\n## Active: `.`
+## 📝 NOTE: 1 uncommitted file(s) in working tree.\n\n## Important Warnings
 
-- **convention in manifest.yaml**
-- **Added session cookies authentication — confirmed 4x**
-- **convention in manifest.yaml**
-- **convention in manifest.yaml**
-- **Added session cookies authentication — prevents XSS injection attacks — confirmed 3x**
+- **gotcha in CHEATSHEET.md** — File updated (external): CHEATSHEET.md
+
+Content summary (233 lines):
+#
+- **gotcha in manifest.yaml** — -     persona: "Skills/Roles/Architecture/cto.md"
++     tier: 1
+-   
 
 ## Project Standards
 
-- convention in manifest.yaml
+- convention in ONBOARDING.md
 - Added session cookies authentication — confirmed 4x
-- convention in manifest.yaml
-- convention in manifest.yaml
-- Added session cookies authentication — prevents XSS injection attacks — confirmed 3x
-- convention in SKILL.md
-- Version your API from day 1 (/api/v1/)
-- Use consistent response format across all endpoints
+- problem-fix in task.md — confirmed 4x
+- Added JWT tokens authentication — prevents XSS injection attacks — confirmed 5x
+- Added session cookies authentication — confirmed 6x
+- what-changed in task.md — confirmed 3x
+- problem-fix in task.md — confirmed 3x
+- how-it-works in SKILL.md — confirmed 4x
+
+## Recent Decisions
+
+- decision in DASHBOARD.md
 
 ## Verified Best Practices
 

@@ -20,10 +20,14 @@ description: "Task Hub Protocol — How Agents pick up, execute, and return task
 
 ---
 
-## Step 0: READ FIRST (every session)
+## Step 0: BOOT SEQUENCE (every new session)
 
-1. Read `DASHBOARD.md` → Quick Context (phase, progress, last agent)
-2. Read `.hub/backlog.yaml` → find task with `assigned_role` = your Agent ID
+> ⚠️ **Order matters. Do NOT skip to Dashboard.**
+
+1. Read `ONBOARDING.md` → Confirm your identity, load persona, load rules
+2. Read `DASHBOARD.md` → Quick Context (phase, progress, last agent)
+3. Check `.hub/handoffs/` → Any pending handoffs for you?
+4. Read `.hub/backlog.yaml` → Find task with `assigned_role` = your Agent ID
 
 ---
 
@@ -98,7 +102,22 @@ In `backlog.yaml`, find tasks where:
    - **Tasks**: move to DONE
    - **Timeline**: add 1 line (`[date] agent — COMPLETED: description`)
 
-## Step 5: HANDOFF
+### 🚫 GATE — MANDATORY before this task is considered DONE:
+
+> **You MUST now perform ONBOARDING Phase 5: Shutdown Ritual.** 
+> Failure to do this means the task is NOT complete.
+>
+> 1. Write FULL report to `.hub/done/TASK-xxx.md`.
+> 2. Create Handoff file if needed.
+> 3. Update Dashboard status (🟢/🟡/🔴).
+>
+> | Situation | Action |
+> | :--- | :--- |
+> | YES — another agent takes over | **MUST** create handoff file (Step 5) |
+> | NO — final task | Skip handoff, write `"No handoff needed"` in report |
+
+
+## Step 5: HANDOFF (required if next agent exists)
 
 Create `.hub/handoffs/TASK-xxx-[from]-to-[to].md`:
 ```
@@ -110,6 +129,7 @@ Create `.hub/handoffs/TASK-xxx-[from]-to-[to].md`:
 ## Context: [decisions, warnings]
 ```
 Create new task in `backlog.yaml` for next Agent.
+
 
 ---
 

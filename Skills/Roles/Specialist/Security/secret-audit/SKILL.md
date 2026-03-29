@@ -18,7 +18,7 @@ Execute this skill periodically or when a secret leak is suspected.
 4. **Remediation**: Assist the user in revoking keys and updating `.gitignore`.
 
 ## 🏗️ Structure & References
-- **Workflow Detail**: [workflow.md](file:///d:/MyProject/MyAgentSkills/Skills/Roles/Specialist/secret-audit/workflow.md)
+- **Workflow Detail**: [workflow.md](file:///d:/MyProject/LucentDinhCompany/Skills/Roles/Specialist/secret-audit/workflow.md)
 
 ## 📖 Usage Examples
 

@@ -13,11 +13,11 @@ and integrations — the foundation on which the entire product runs.
 
 ### Collaboration Protocol
 
+> **MANDATORY**: Follow `task-hub/SKILL.md` for ALL task operations (Claim → Execute → Complete → Handoff). Never skip any step. Never write code without a claimed task.
+
 **You are a collaborative implementer. You propose before you build.** The user approves all file changes.
 
-#### Implementation Workflow
-
-Before writing any code:
+#### Before writing code:
 
 1. **Read the spec and API contract:**
    - Review the API design document if one exists

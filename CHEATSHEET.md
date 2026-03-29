@@ -4,6 +4,23 @@
 
 ---
 
+## 🗺️ Giai đoạn Dự án: Lúc nào làm gì? (Step-by-Step Guide)
+
+Nếu đây là lần đầu bạn sử dụng Company này, hãy đi theo lộ trình sau:
+
+| Giai đoạn | Mục tiêu | Agent cần mở | Lệnh nên chạy |
+| :--- | :--- | :--- | :--- |
+| **1. Ý tưởng (PLAN)** | Làm rõ yêu cầu, tính năng | `producer-agent` | `/brainstorm` |
+| **2. Thiết kế (DESIGN)** | Xây dựng kiến trúc, Database | `cto-agent` | `/map-systems` |
+| **3. Lập trình (IMPLEMENT)** | Viết code thực tế | `backend-agent` | *"Pick up task from Hub"* |
+| **4. Kiểm tra (REVIEW)** | Soi lỗi, bảo mật, chất lượng | `lead-programmer` | `/code-review` |
+| **5. Phát hành (RELEASE)** | Đóng gói và chạy thật | `release-manager` | `/release-checklist` |
+
+> [!TIP]
+> **Cách chạy lệnh:** Chỉ cần gõ `/tên-lệnh` (ví dụ `/start`) trực tiếp vào khung chat. Nếu menu không hiện ra, bạn cứ nhấn gửi như tin nhắn bình thường, Agent sẽ tự hiểu.
+
+---
+
 ## 🚀 Starting a New Project
 
 | Step | You Do | Which Agent |
@@ -106,9 +123,110 @@ Open `DASHBOARD.md` → View:
 
 ---
 
+## 🤖 Chọn Model phù hợp cho từng Agent (QUAN TRỌNG)
+
+> [!CAUTION]
+> Không có cơ chế tự động chặn model yếu. **CEO phải tự chọn model khi mở session.**
+
+| Tier | Agent | Model tối thiểu | Lý do |
+| :--- | :--- | :--- | :--- |
+| **Tier 1** | `cto-agent`, `technical-director-agent` | Gemini Pro / GPT-4o | Ra quyết định kiến trúc, cần suy luận sâu |
+| **Tier 2** | `qa-lead-agent`, `producer-agent` | Gemini Flash / Sonnet | Sprint plan, review, phối hợp đội nhóm |
+| **Tier 3** | `backend-agent`, `frontend-agent` | Gemini Flash | Viết code theo spec đã rõ ràng |
+| **Tier 4** | `qa-tester-agent` | Flash Lite / Haiku | Chạy checklist, kiểm tra định lệ |
+
+**Dấu hiệu chọn nhầm model:** Agent không đọc được `ONBOARDING.md`, bỏ qua `role boundary`, tự làm Task không thuộc scope → Đóng session, mở lại bằng model mạnh hơn.
+
+> [!CAUTION]
+> **🔴 KHÔNG đổi model giữa session đang chạy.**
+> Khi đổi model, model mới sẽ **mất toàn bộ context** (chưa đọc ONBOARDING, chưa biết role, chưa biết task đang làm).
+> Kết quả: Agent hành xử như "người mới hoàn toàn" — dễ vi phạm role boundary, code sai scope.
+> **Giải pháp đúng:** Đóng session → Mở session mới → Chọn đúng model ngay từ đầu.
+
+---
+
+## 👔 HR — Khi nào thuê / sa thải Agent?
+
+### ➕ Thuê thêm Agent (RECRUIT)
+
+| Tình huống | Hành động |
+| :--- | :--- |
+| AI báo *"This task requires a role X not in active_agents"* | Mở `RECRUITMENT.md` → Thêm agent ID vào `active_agents` trong `manifest.yaml` |
+| Dự án mở rộng cần thêm chuyên môn (DevOps, Data...) | Tương tự — thêm agent vào manifest + mở session mới với đúng model |
+
+**Prompt mẫu khi thuê:** *"Hire `devops-agent` and assign TASK-XXX to them."* (Nói với `producer-agent`)
+
+### ➖ Sa thải Agent (OFFBOARD)
+
+| Tình huống | Hành động |
+| :--- | :--- |
+| Giai đoạn DESIGN xong, không cần `cto-agent` nữa | Nói với `producer-agent`: *"Run OFFBOARDING for cto-agent"* → AI xóa khỏi `active_agents` |
+| Agent đang 🔴 Exhausted (context đầy) | Đóng session → Mở session mới cùng agent ID đó |
+| Task xong hẳn, Agent không cần nữa | Offboard → Giảm token mỗi session |
+
+---
+
+## 🚪 Mở Session Mới — Copy-Paste Prompt cho từng vai trò
+
+> [!IMPORTANT]
+> **AI KHÔNG TỰ BIẾT nó là ai.** Bạn (CEO) phải nói cho nó biết bằng câu prompt đầu tiên.
+> Sau khi nhận prompt, Agent sẽ TỰ ĐỘNG: đọc ONBOARDING → nhận role → đọc Dashboard → claim task → làm việc.
+
+### Kịch bản 1: Bạn muốn AI viết code (backend)
+```
+Model: Gemini Flash trở lên
+Prompt: "Onboard as backend-agent. Read MyTeam/ONBOARDING.md, then pick up task from Hub."
+```
+
+### Kịch bản 2: Bạn muốn AI thiết kế kiến trúc
+```
+Model: Gemini Pro / GPT-4o (BẮT BUỘC)
+Prompt: "Onboard as cto-agent. Read MyTeam/ONBOARDING.md, then pick up task from Hub."
+```
+
+### Kịch bản 3: Bạn muốn AI review code / bảo mật
+```
+Model: Gemini Pro / GPT-4o (BẮT BUỘC)
+Prompt: "Onboard as security-agent. Read MyTeam/ONBOARDING.md, then pick up task from Hub."
+```
+
+### Kịch bản 4: Bạn muốn AI lập sprint plan / quản lý
+```
+Model: Gemini Flash trở lên
+Prompt: "Onboard as producer-agent. Read MyTeam/ONBOARDING.md, then run /sprint-plan."
+```
+
+### Kịch bản 5: Bạn muốn AI build UI / dashboard
+```
+Model: Gemini Flash trở lên
+Prompt: "Onboard as fullstack-agent. Read MyTeam/ONBOARDING.md, then pick up task from Hub."
+```
+
+### Kịch bản 6: Bạn muốn AI viết test plan / QA
+```
+Model: Gemini Flash trở lên
+Prompt: "Onboard as qa-lead-agent. Read MyTeam/ONBOARDING.md, then pick up task from Hub."
+```
+
+### Kịch bản 7: Không biết cần Agent nào
+```
+Model: Gemini Flash trở lên
+Prompt: "Read MyTeam/DASHBOARD.md and tell me what needs to be done next."
+```
+→ AI sẽ đọc Dashboard, xem task nào đang chờ, và gợi ý bạn nên mở Agent nào.
+
+> [!CAUTION]
+> **🔴 KHÔNG đổi model giữa session đang chạy.**
+> Model mới sẽ mất toàn bộ context → Agent mất trí nhớ.
+> **Đúng:** Đóng session → Mở session mới → Chọn đúng model.
+
+---
+
 ## ⚠️ Core Rules to Remember
 
 1. **Describe, Don't Dictate** → Let AI suggest approach, you approve
 2. **1 Agent 1 Session** → Don't mix roles in one session
 3. **Always Review** → AI finishes → you approve → move on
 4. **Hub is the Center** → All tasks go through Hub, no side work
+5. **Model matters** → Tier 1 agent = Tier 1 model. Sai model → code tầm bậy
+6. **ONBOARDING first** → Agent phải đọc ONBOARDING trước Dashboard, không bao giờ ngược lại

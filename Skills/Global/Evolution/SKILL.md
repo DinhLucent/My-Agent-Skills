@@ -18,8 +18,8 @@ When this skill is triggered, you must execute the **Self-Evolution Loop** to en
 4. **Knowledge Persistence**: Document lessons in `tasks/lessons.md`.
 
 ## 🏗️ Structure & References
-- **Workflow**: [auto-reflect.md](file:///d:/MyProject/MyAgentSkills/Skills/Global/Evolution/auto-reflect.md)
-- **Lessons Log**: [lessons.md](file:///d:/MyProject/MyAgentSkills/tasks/lessons.md)
+- **Workflow**: [auto-reflect.md](file:///d:/MyProject/LucentDinhCompany/Skills/Global/Evolution/auto-reflect.md)
+- **Lessons Log**: [lessons.md](file:///d:/MyProject/LucentDinhCompany/tasks/lessons.md)
 
 ## 📖 Usage Examples
 
@@ -27,4 +27,4 @@ When this skill is triggered, you must execute the **Self-Evolution Loop** to en
 **Agent**: "I have successfully configured the multi-agent pipeline. I will now run `/auto-reflect` to capture this workflow for future use."
 
 ---
-*Generated using MyAgentSkills Workflow*
+*Generated using LucentDinhCompany Workflow*

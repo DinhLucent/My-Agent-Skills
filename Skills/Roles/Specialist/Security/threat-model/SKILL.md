@@ -18,7 +18,7 @@ Run this workflow **BEFORE** writing code for any feature involving payments, au
 4. **Mitigations**: Propose "Security by Design" defenses.
 
 ## 🏗️ Structure & References
-- **Workflow Detail**: [workflow.md](file:///d:/MyProject/MyAgentSkills/Skills/Roles/Specialist/threat-model/workflow.md)
+- **Workflow Detail**: [workflow.md](file:///d:/MyProject/LucentDinhCompany/Skills/Roles/Specialist/threat-model/workflow.md)
 
 ## 📖 Usage Examples
 

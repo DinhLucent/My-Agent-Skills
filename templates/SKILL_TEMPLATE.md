@@ -26,4 +26,4 @@
 **Agent**: "[Behavior matching this skill]"
 
 ---
-*Generated using MyAgentSkills Workflow*
+*Generated using LucentDinhCompany Workflow*
