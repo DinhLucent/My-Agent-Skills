@@ -1,6 +1,20 @@
 # Agent Skill Mapping Manifest
 # Each agent has: id, name, persona (role definition), and skills (tools)
 # All agents also inherit skills from groups.global
+# Task Hub skill (task-hub) is auto-inherited — agents MUST follow Hub protocol
+
+# ═══════════════════════════════════════════
+# ACTIVE AGENTS — Only these are loaded per session
+# Edit this list per project to save tokens
+# ═══════════════════════════════════════════
+active_agents:
+  - "cto-agent"
+  - "backend-agent"
+  - "fullstack-agent"
+  - "security-agent"
+  - "qa-lead-agent"
+  - "producer-agent"
+  # Add/remove agents as needed per project
 
 agents:
   # ═══════════════════════════════════════════
@@ -211,6 +225,7 @@ agents:
 # ═══════════════════════════════════════════
 groups:
   global:
+    - "Skills/Global/task-hub"
     - "Skills/Global/brainstorm"
     - "Skills/Global/onboard"
     - "Skills/Global/changelog"

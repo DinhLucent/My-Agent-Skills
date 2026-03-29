@@ -1,73 +1,49 @@
-# ⚖️ Operating Rules — Quy Tắc Vận Hành
+# ⚖️ Operating Rules
 
-> Tài liệu ngắn gọn định nghĩa cách các Agent giao tiếp, phối hợp, và xử lý tình huống.
+> Core rules. For full Hub protocol see `Skills/Global/task-hub/SKILL.md`.
 
 ---
 
-## 1. Protocol giao tiếp với User
+## 1. Task Hub
 
-Mọi Agent **BẮT BUỘC** tuân thủ trình tự:
+- All work goes through `.hub/`. No exceptions.
+- On session start: read `DASHBOARD.md` → `.hub/backlog.yaml`
+- Only claim tasks matching your `assigned_role`. Wrong role → **refuse**.
+- After every task: update Dashboard (1 line) + write report to `.hub/done/`.
+
+## 2. User Communication
 
 ```
-1. HỎI      → Đặt câu hỏi clarification trước khi làm
-2. OPTION   → Đưa ra 2-3 phương án với pros/cons
-3. USER OK  → Chờ User chọn phương án
-4. DRAFT    → Trình bày bản nháp, chưa viết file
-5. APPROVE  → User xác nhận → Agent mới write/commit
+ASK → OPTIONS → USER OK → DRAFT → APPROVE
 ```
 
-**Tuyệt đối KHÔNG:**
-- Tự ý viết file mà chưa hỏi User
-- Đưa ra quyết định kiến trúc mà không escalate
-- Override lựa chọn của User
+Never write files without approval. Never override User choices.
 
----
+## 3. Role Boundaries
 
-## 2. Ranh giới vai trò (Domain Boundary)
+- Stay within your Persona scope.
+- Need other expertise → suggest User call the right Agent.
+- Found security issue → **must** report to `security-agent`.
 
-- Chỉ làm việc trong phạm vi Persona đã định nghĩa.
-- Nếu task yêu cầu chuyên môn ngoài domain → **Đề xuất User gọi Agent khác**.
+## 4. Escalation
 
-| Tình huống | Hành động |
-|-----------|----------|
-| Backend Dev gặp vấn đề về UI | → Đề xuất gọi `frontend-agent` |
-| Frontend Dev cần thay đổi API | → Đề xuất gọi `backend-agent` |
-| Bất kỳ ai phát hiện lỗ hổng bảo mật | → **Bắt buộc** báo `security-agent` |
+| Issue | Escalate To |
+|-------|-------------|
+| Technical conflict | `technical-director-agent` |
+| Architecture impact | `cto-agent` |
+| Scope/timeline | `producer-agent` |
+| Quality concern | `qa-lead-agent` |
+| Uncertain | **Ask User** |
 
----
+## 5. Handoff
 
-## 3. Escalation — Khi nào báo cáo lên trên
+1. Create file in `.hub/handoffs/` (use `templates/handoff-template.md`)
+2. Create new task in `backlog.yaml` for next Agent
+3. Update Dashboard
 
-| Loại vấn đề | Escalate đến |
-|-------------|-------------|
-| Xung đột kỹ thuật giữa 2 Agent | `technical-director-agent` |
-| Quyết định ảnh hưởng kiến trúc tổng | `cto-agent` |
-| Scope/timeline bị ảnh hưởng | `producer-agent` |
-| Vấn đề chất lượng sản phẩm | `qa-lead-agent` |
-| Không chắc chắn → **Hỏi User** | User luôn là người quyết định cuối |
+## 6. Security
 
----
-
-## 4. Handoff — Chuyển giao công việc
-
-Khi Agent A hoàn thành phần việc và cần Agent B tiếp tục:
-
-1. **Tóm tắt** những gì đã làm xong.
-2. **Liệt kê** các file đã thay đổi/tạo mới.
-3. **Ghi rõ** yêu cầu cụ thể cho Agent B.
-4. **Đừng giả định** — Agent B sẽ đọc lại từ đầu.
-
----
-
-## 5. Quy tắc bảo mật (tham chiếu)
-
-Xem file đầy đủ: `Skills/Global/.agents/rules/security.md`
-
-Tóm tắt nhanh:
-- ❌ Không hardcode mật khẩu, API key, token
-- ❌ Không ghi log thông tin nhạy cảm (PII, credit card)
-- ✅ Luôn validate input và sanitize output
-- ✅ Tự hỏi: "Code này có tạo lỗ hổng bảo mật không?"
-
----
-*Ngắn gọn. Rõ ràng. Thực thi.*
+- ❌ No hardcoded secrets
+- ❌ No logging PII
+- ✅ Validate input, sanitize output
+- Full rules: `Skills/Global/.agents/rules/security.md`

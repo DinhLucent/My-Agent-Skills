@@ -1,66 +1,65 @@
-# 📋 Quy Trình Tuyển Dụng Agent (Recruitment Guide)
+# 📋 Agent Recruitment Guide
 
-> Hướng dẫn chọn đúng Agent cho đúng vai trò, dựa trên điểm mạnh của từng loại AI.
-
----
-
-## Nguyên tắc: Đúng người — Đúng việc
-
-Mỗi AI model có điểm mạnh riêng. Chọn sai model = lãng phí token + output kém.
-
-### Bảng phân loại Agent theo năng lực
-
-| Tier | Vai trò phù hợp | Yêu cầu năng lực | Model khuyến nghị |
-|------|-----------------|-------------------|-------------------|
-| **Tier 1 — Leadership** | CTO, Technical Director, Producer | Tư duy chiến lược, phân tích trade-off, ra quyết định phức tạp | Claude Opus / GPT-4o / Gemini Pro |
-| **Tier 2 — Department Lead** | Lead Programmer, PM, QA Lead, UX Designer | Phân tích sâu, review chất lượng, viết tài liệu kỹ thuật | Claude Sonnet / GPT-4o-mini |
-| **Tier 3 — Specialist** | Backend, Frontend, Security, DevOps | Thực thi code, scan lỗi, chạy pipeline | Claude Sonnet / Gemini Flash / Haiku |
-| **Tier 4 — Executor** | QA Tester, Community Manager, Data Entry | Task lặp đi lặp lại, format output, batch processing | Haiku / Gemini Flash / GPT-4o-mini |
+> Guide for selecting the right Agent for the right role, based on each AI's strengths.
 
 ---
 
-## Quy trình 5 bước: Thuê Agent mới
+## Principle: Right Person — Right Job
 
-### Bước 1: Xác định nhu cầu
-Trả lời 3 câu hỏi:
-- **Công việc cụ thể là gì?** (Ví dụ: "Cần AI review database schema")
-- **Độ phức tạp ra sao?** → Chiến lược (Tier 1) hay Thực thi (Tier 3-4)?
-- **Thuộc phòng ban nào?** → Architecture | Development | Quality | Management | Specialist
+Each AI model has different strengths. Wrong model = wasted tokens + poor output.
 
-### Bước 2: Kiểm tra nhân sự hiện có
-Mở `manifest.yaml` → Kiểm tra xem đã có Agent phù hợp chưa.
-- **Có rồi?** → Gán thêm skill mới cho Agent đó.
-- **Chưa có?** → Tiếp tục Bước 3.
+### Agent Classification by Capability
 
-### Bước 3: Tạo Persona cho Agent mới
+| Tier | Suitable Roles | Required Capabilities | Recommended Models |
+|------|---------------|----------------------|-------------------|
+| **Tier 1 — Leadership** | CTO, Technical Director, Producer | Strategic thinking, trade-off analysis, complex decisions | Claude Opus / GPT-4o / Gemini Pro |
+| **Tier 2 — Department Lead** | Lead Programmer, PM, QA Lead, UX Designer | Deep analysis, quality review, technical documentation | Claude Sonnet / GPT-4o-mini |
+| **Tier 3 — Specialist** | Backend, Frontend, Security, DevOps | Code execution, vulnerability scanning, pipeline ops | Claude Sonnet / Gemini Flash / Haiku |
+| **Tier 4 — Executor** | QA Tester, Community Manager, Data Entry | Repetitive tasks, output formatting, batch processing | Haiku / Gemini Flash / GPT-4o-mini |
+
+---
+
+## 5-Step Process: Hiring a New Agent
+
+### Step 1: Identify Need
+Answer 3 questions:
+- **What's the specific job?** (e.g., "Need AI to review database schema")
+- **Complexity level?** → Strategic (Tier 1) or Execution (Tier 3-4)?
+- **Which department?** → Architecture | Development | Quality | Management | Specialist
+
+### Step 2: Check Existing Staff
+Open `manifest.yaml` → Check if a suitable Agent already exists.
+- **Already exists?** → Assign additional skills to that Agent.
+- **Doesn't exist?** → Continue to Step 3.
+
+### Step 3: Create Persona for New Agent
 
 ```bash
-# Copy template
-cp templates/SKILL_TEMPLATE.md Skills/Roles/<PhongBan>/<ten-agent>.md
+cp templates/SKILL_TEMPLATE.md Skills/Roles/<Department>/<agent-name>.md
 ```
 
-Persona **BẮT BUỘC** phải có:
-- **Description**: Agent này làm gì, khi nào nên gọi.
-- **Key Responsibilities**: 3-5 trách nhiệm chính, cụ thể.
-- **Decision Framework**: Agent dùng tiêu chí gì để ra quyết định.
-- **What This Agent Must NOT Do**: Ranh giới rõ ràng.
-- **Delegation Map**: Phối hợp với ai, báo cáo ai, chuyển việc cho ai.
+Persona **MUST** include:
+- **Description**: What this Agent does, when to call it.
+- **Key Responsibilities**: 3-5 specific responsibilities.
+- **Decision Framework**: Criteria the Agent uses for decisions.
+- **What This Agent Must NOT Do**: Clear boundaries.
+- **Delegation Map**: Who to collaborate with, report to, hand off to.
 
-### Bước 4: Gán Skills
-Kiểm tra kho kỹ năng hiện có:
+### Step 4: Assign Skills
+Check existing skill inventory:
 
 ```
-Skills/Global/         → Kỹ năng chung (mọi Agent đều cần)
-Skills/Roles/          → Kỹ năng chuyên môn theo phòng ban
+Skills/Global/         → Global skills (all Agents need)
+Skills/Roles/          → Specialized skills by department
 ```
 
-- **Skill có sẵn?** → Gán trực tiếp vào manifest.
-- **Skill chưa có?** → Tạo mới theo workflow `create-skill.md` trong `templates/`.
+- **Skill exists?** → Assign directly in manifest.
+- **Skill missing?** → Create new one using `templates/` workflow.
 
-### Bước 5: Đăng ký vào Manifest
+### Step 5: Register in Manifest
 
 ```yaml
-# Thêm vào manifest.yaml
+# Add to manifest.yaml
   - id: "dba-agent"
     name: "Database Administrator"
     persona: "Skills/Roles/Specialist/Data/dba.md"
@@ -71,11 +70,11 @@ Skills/Roles/          → Kỹ năng chuyên môn theo phòng ban
 
 ---
 
-## Checklist xác nhận tuyển dụng
+## Recruitment Confirmation Checklist
 
-- [ ] Persona file đã tạo với đầy đủ 5 mục bắt buộc
-- [ ] Skills đã được gán (từ kho có sẵn hoặc tạo mới)
-- [ ] Entry đã thêm vào `manifest.yaml`
-- [ ] Tier đã xác định (chọn model phù hợp)
+- [ ] Persona file created with all 5 mandatory sections
+- [ ] Skills assigned (from existing inventory or newly created)
+- [ ] Entry added to `manifest.yaml`
+- [ ] Tier determined (appropriate model selected)
 
-✅ Agent mới sẵn sàng onboard!
+✅ New Agent ready for onboarding!
