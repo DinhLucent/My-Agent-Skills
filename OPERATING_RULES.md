@@ -48,4 +48,4 @@ Never write files without approval. Never override User choices.
 - ❌ No hardcoded secrets
 - ❌ No logging PII
 - ✅ Validate input, sanitize output
-- Full rules: `Skills/Global/.agents/rules/security.md`
+- Full rules: `Skills/Global/security-rules/SKILL.md`
