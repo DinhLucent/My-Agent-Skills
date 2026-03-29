@@ -82,18 +82,18 @@ _No activity yet._
 
 ---
 
-## � HR Log (Bổ nhiệm & Sa thải)
+## 👔 HR Log (Hiring & Offboarding)
 
 <!--
-Ghi nhận lịch sử thay đổi nhân sự (active_agents).
-Format: [date] CEO — [HIRED/OFFBOARDED]: agent-id (Lý do)
+Records history of personnel changes (active_agents).
+Format: [date] CEO — [HIRED/OFFBOARDED]: agent-id (Reason)
 -->
 
 _No HR changes yet._
 
 ---
 
-## �📁 Reference
+## 📁 Reference
 
 | File | Purpose |
 |------|---------|

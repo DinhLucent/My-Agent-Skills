@@ -1,33 +1,33 @@
-# 🚪 OFFBOARDING — Quy trình Sa thải / Rút lui
+# 🚪 OFFBOARDING — Agent Retirement / Firing Process
 
-> Sử dụng khi một Agent không còn cần thiết cho Phase tiếp theo (ví dụ: xong Code, chuyển sang Review) để tiết kiệm token và loại bỏ nhiễu.
+> Use this when an Agent is no longer needed for the current Phase (e.g., Code complete, moving to Review) to save tokens and reduce noise.
 
-## 📋 Checklist 4 Bước (Dành cho Agent)
+## 📋 4-Step Checklist (For Agents)
 
-Khi CEO yêu cầu sa thải (offboard) một Agent, hệ thống phải thực hiện 4 bước này:
+When the CEO requests to offboard an Agent, the system must execute these 4 steps:
 
-- [ ] **1. Dọn dẹp Backlog (Handoff)**
-  - Đảm bảo Agent chuẩn bị rời đi KHÔNG còn task ở trạng thái `IN_PROGRESS` (kiểm tra thư mục `.hub/active/`).
-  - Nếu có: Viết file bàn giao vào `.hub/handoffs/` hoặc đổi `status` thành `todo` trong `.hub/backlog.yaml`.
+- [ ] **1. Clean Backlog (Handoff)**
+  - Ensure the departing Agent has NO tasks in `IN_PROGRESS` state (check `.hub/active/` directory).
+  - If they do: Write a handoff file in `.hub/handoffs/` or reset the `status` to `todo` in `.hub/backlog.yaml`.
 
-- [ ] **2. Cập nhật Manifest**
-  - Xóa dòng ID của Agent này khỏi danh sách `active_agents` trong `manifest.yaml`.
+- [ ] **2. Update Manifest**
+  - Delete the Agent's ID from the `active_agents` list in `manifest.yaml`.
 
-- [ ] **3. Cập nhật Đội hình (Dashboard)**
-  - Xóa dòng của Agent khỏi bảng `Active Team (Roles)` trong `DASHBOARD.md`.
+- [ ] **3. Update Roster (Dashboard)**
+  - Remove the Agent's row from the `Active Team (Roles)` table in `DASHBOARD.md`.
 
-- [ ] **4. Ghi Log Nhân sự (HR Log)**
-  - Thêm 1 dòng vào phần biến động nhân sự `HR Log` trong `DASHBOARD.md`.
-  - _Ví dụ format: `[YYYY-MM-DD] CEO — ACTION: Offboarded [agent-id] (Hoàn thành nhiệm vụ Phase [phase-name])`_
+- [ ] **4. HR Log Update**
+  - Add 1 line to the `HR Log` section in `DASHBOARD.md`.
+  - _Format example: `[YYYY-MM-DD] CEO — ACTION: Offboarded [agent-id] (Phase [phase-name] complete)`_
 
 ---
 
-## 💡 Hướng dẫn cho CEO
+## 💡 Guide for CEO
 
-Khi bạn thấy một Agent đã rảnh việc và muốn rút họ ra khỏi dự án:
+When you see an Agent is idle and want to remove them from the project:
 
 ```text
-"Dự án đã xong phase X. Hãy chạy quy trình OFFBOARDING cho [agent-id] theo OFFBOARDING.md nhé."
+"The project has finished phase X. Please run the OFFBOARDING process for [agent-id] according to OFFBOARDING.md."
 ```
 
-Hệ thống sẽ rà soát và cho Agent đó "nghỉ việc" an toàn. Khi cần lại, bạn có thể gọi quy trình `RECRUITMENT.md` để "Tuyển lại".
+The system will verify and securely "retire" the Agent. When needed again, you can call the `RECRUITMENT.md` process to "Re-hire" them.

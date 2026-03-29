@@ -1,113 +1,113 @@
-# 📋 CHEATSHEET — Hướng dẫn nhanh cho CEO
+# 📋 CHEATSHEET — Quick Reference for CEO
 
-> Mở file này khi không biết nên làm gì. Tìm tình huống → làm theo.
-
----
-
-## 🚀 Bắt đầu dự án mới
-
-| Bước | Bạn làm | Agent nào |
-|------|---------|-----------|
-| 1 | Mô tả dự án (tech stack, yêu cầu, quy mô) | → `producer-agent` hoặc `cto-agent` |
-| 2 | AI đề xuất đội hình → Bạn approve | → AI cập nhật `active_agents` |
-| 3 | AI chạy `/sprint-plan` → Tasks vào Hub | → Bạn duyệt sprint plan |
-| 4 | Mở session từng Agent → Nó tự lấy task | → Bạn review mỗi output |
+> Open this file when you don't know what to do. Find your situation → follow the action.
 
 ---
 
-## 🔧 Các tình huống phổ biến
+## 🚀 Starting a New Project
 
-| Tình huống | Mở Agent | Action |
-|-----------|----------|--------|
-| **Dự án mới** | `producer-agent` | Mô tả dự án → AI phân tích → đề xuất team → sprint plan |
-| **Thêm feature** | `producer-agent` | Mô tả feature → AI chia tasks → gán roles → vào Hub |
-| **Bug report** | `qa-lead-agent` | Mô tả bug → AI tạo task priority + gán role |
-| **Hotfix khẩn** | `security-agent` → `backend-agent` | Đánh giá → Fix → Review → Deploy |
-| **Scope change** | `cto-agent` | Mô tả thay đổi → AI đánh giá impact → plan |
-| **Sprint mới** | `producer-agent` | `/sprint-plan` → Tasks mới vào Hub |
+| Step | You Do | Which Agent |
+|------|--------|-------------|
+| 1 | Describe project (tech stack, requirements, scale) | → `producer-agent` or `cto-agent` |
+| 2 | AI suggests team → You approve | → AI updates `active_agents` |
+| 3 | AI runs `/sprint-plan` → Tasks go to Hub | → You review sprint plan |
+| 4 | Open session for each Agent → They grab tasks | → You review each output |
+
+---
+
+## 🔧 Common Situations
+
+| Situation | Open Agent | Action |
+|-----------|------------|--------|
+| **New Project** | `producer-agent` | Describe project → AI analyzes → suggests team → sprint plan |
+| **New Feature** | `producer-agent` | Describe feature → AI splits tasks → assigns roles → to Hub |
+| **Bug Report** | `qa-lead-agent` | Describe bug → AI creates prioritized task + assigns role |
+| **Urgent Hotfix** | `security-agent` → `backend-agent` | Assess → Fix → Review → Deploy |
+| **Scope Change** | `cto-agent` | Describe change → AI assesses impact → plans |
+| **New Sprint** | `producer-agent` | `/sprint-plan` → New tasks to Hub |
 | **Release** | `release-manager-agent` | `/release-checklist` → deploy → monitor |
-| **Thiếu role** | AI tự báo → Bạn mở session mới | Thuê Agent mới theo `RECRUITMENT.md` |
-| **Xong việc (Sa thải)** | `producer-agent` | "Chạy OFFBOARDING cho [agent-id]" |
-| **Code review** | `lead-programmer-agent` | `/code-review` |
-| **Security audit** | `security-agent` | `/deep-scan` |
-| **Performance issue** | `performance-analyst-agent` | `/perf-profile` |
-| **UI/UX feedback** | `ux-designer-agent` | Mô tả issue → AI đề xuất fix |
-| **Retrospective** | `producer-agent` | `/retrospective` cuối sprint |
+| **Missing Role** | AI reports automatically → Open new session | Hire new Agent per `RECRUITMENT.md` |
+| **Task Done (Fire)** | `producer-agent` | "Run OFFBOARDING for [agent-id]" |
+| **Code Review** | `lead-programmer-agent` | `/code-review` |
+| **Security Audit** | `security-agent` | `/deep-scan` |
+| **Performance Issue**| `performance-analyst-agent` | `/perf-profile` |
+| **UI/UX Feedback** | `ux-designer-agent` | Describe issue → AI suggests fix |
+| **Retrospective** | `producer-agent` | `/retrospective` at end of sprint |
 
 ---
 
-## 🤔 Không biết mở Agent nào?
+## 🤔 Don't know which Agent to open?
 
 ```
-→ Mở producer-agent. Nó sẽ phân loại và điều phối cho bạn.
+→ Open producer-agent. It will sort and orchestrate for you.
 ```
 
 ---
 
-## 📝 Mỗi session bạn cần nói gì?
+## 📝 What to say in each session?
 
-### Lần đầu (dự án mới):
+### First time (new project):
 ```
-"Tôi muốn xây [mô tả dự án].
+"I want to build [project description].
  Tech: [stack].
- Yêu cầu đặc biệt: [bảo mật cao / real-time / mobile-first / ...]
- Quy mô: [nhỏ / trung bình / lớn]"
+ Special requirements: [high security / real-time / mobile-first / ...]
+ Scale: [small / medium / large]"
 ```
 
-### Session tiếp theo (Agent đã có Hub):
+### Subsequent sessions (Agent Hub is active):
 ```
-"Lấy task từ Hub và thực hiện"
+"Pick up task from Hub and execute"
 ```
-→ Agent tự đọc Dashboard + backlog + handoffs → tự làm.
+→ Agent reads Dashboard + backlog + handoffs → works automatically.
 
-### Khi có vấn đề mới:
+### When a new issue arises:
 ```
-"Vấn đề: [mô tả]. Tạo task vào Hub."
+"Issue: [description]. Create a task in the Hub."
 ```
 
 ---
 
-## 🔄 Workflow hàng ngày
+## 🔄 Daily Workflow
 
 ```
-Sáng:  Mở DASHBOARD.md → Check tiến độ tổng
-       Producer: "Sprint status?"
+Morning: Open DASHBOARD.md → Check overall progress
+         Producer: "Sprint status?"
        
-Làm:   Mở Agent theo task cần làm → Nó tự lấy từ Hub
-       Review output → Approve / yêu cầu sửa
+Work:    Open Agent based on task → Grabs task from Hub
+         Review output → Approve / request changes
        
-Cuối:  Check DASHBOARD.md → Xem tasks đã done hôm nay
-       Phát hiện vấn đề → Tạo task mới vào Hub
+End:     Check DASHBOARD.md → See completed tasks today
+         Found issue? → Create new task in Hub
 ```
 
 ---
 
-## ⚡ Slash Commands hay dùng
+## ⚡ Frequently Used Slash Commands
 
-| Command | Khi nào |
-|---------|---------|
-| `/brainstorm` | Ý tưởng mới, chưa rõ ràng |
-| `/sprint-plan` | Lên kế hoạch sprint, tạo tasks |
-| `/code-review` | Review code trước khi merge |
-| `/deep-scan` | Kiểm tra bảo mật |
-| `/gate-check` | Kiểm tra sẵn sàng chuyển phase |
-| `/release-checklist` | Chuẩn bị release |
-| `/retrospective` | Cuối sprint, rút kinh nghiệm |
-
----
-
-## 📊 Check tiến độ
-
-Mở `DASHBOARD.md` → Xem:
-- **Quick Context** → Phase hiện tại, % hoàn thành
-- **Task Board** → Ai đang làm gì
-- **Timeline** → Lịch sử gần đây
+| Command | When to use |
+|---------|-------------|
+| `/brainstorm` | New ideas, unclear concepts |
+| `/sprint-plan` | Sprint planning, creating tasks |
+| `/code-review` | Code review before merge |
+| `/deep-scan` | Security check |
+| `/gate-check` | Ready to switch phases? |
+| `/release-checklist` | Prep for release |
+| `/retrospective` | End of sprint, lessons learned |
 
 ---
 
-## ⚠️ Quy tắc nhớ
+## 📊 Checking Progress
 
-1. **Mô tả, không chỉ định** → Để AI đề xuất approach, bạn duyệt
-2. **1 Agent 1 session** → Không gộp nhiều role trong 1 session
-3. **Luôn review** → AI làm xong → bạn approve → mới tiếp
-4. **Hub là trung tâm** → Mọi task đều qua Hub, không làm ngoài
+Open `DASHBOARD.md` → View:
+- **Quick Context** → Current Phase, % complete
+- **Task Board** → Who is doing what
+- **Timeline** → Recent history
+
+---
+
+## ⚠️ Core Rules to Remember
+
+1. **Describe, Don't Dictate** → Let AI suggest approach, you approve
+2. **1 Agent 1 Session** → Don't mix roles in one session
+3. **Always Review** → AI finishes → you approve → move on
+4. **Hub is the Center** → All tasks go through Hub, no side work
