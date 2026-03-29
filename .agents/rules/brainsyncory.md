@@ -1,7 +1,7 @@
 
 
 # Project Memory — My-Agent-Skills
-> 174 notes | Score threshold: >40
+> 175 notes | Score threshold: >40
 
 ## Safety — Never Run Destructive Commands
 
@@ -30,6 +30,7 @@ Content summary (233 lines):
 
 ## Project Standards
 
+- Added session cookies authentication — confirmed 5x
 - convention in ONBOARDING.md
 - Added session cookies authentication — confirmed 4x
 - problem-fix in task.md — confirmed 4x
@@ -37,7 +38,6 @@ Content summary (233 lines):
 - Added session cookies authentication — confirmed 6x
 - what-changed in task.md — confirmed 3x
 - problem-fix in task.md — confirmed 3x
-- how-it-works in SKILL.md — confirmed 4x
 
 ## Recent Decisions
 
