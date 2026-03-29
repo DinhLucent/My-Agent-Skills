@@ -27,6 +27,7 @@
 | **New Sprint** | `producer-agent` | `/sprint-plan` → New tasks to Hub |
 | **Release** | `release-manager-agent` | `/release-checklist` → deploy → monitor |
 | **Missing Role** | AI reports automatically → Open new session | Hire new Agent per `RECRUITMENT.md` |
+| **Agent Exhausted** | AI shows 🔴 status in Dashboard | Close current session → Open new session for same role |
 | **Task Done (Fire)** | `producer-agent` | "Run OFFBOARDING for [agent-id]" |
 | **Code Review** | `lead-programmer-agent` | `/code-review` |
 | **Security Audit** | `security-agent` | `/deep-scan` |

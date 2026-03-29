@@ -88,6 +88,12 @@ In `backlog.yaml`, find tasks where:
    - Notes for next Agent: [if any]
    ```
 4. Update `DASHBOARD.md`:
+   - Move task to DONE list
+   - Update `Quick Context` progress
+   - **Evaluate and Update your Status (Context)** in the Active Team table:
+     - 🟢 **Optimal**: Normal operation, light context.
+     - 🟡 **High Load**: Read many large files or long debugging session.
+     - 🔴 **Exhausted**: Context limit reached or losing focus. You MUST ask CEO to restart your session.
    - **Quick Context**: progress %, last agent, 1-line summary
    - **Tasks**: move to DONE
    - **Timeline**: add 1 line (`[date] agent — COMPLETED: description`)

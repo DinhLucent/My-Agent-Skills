@@ -25,14 +25,14 @@
 
 > **Note for CEO:** These are the agents currently assigned to this project (from `manifest.yaml`). You can ping them by their role.
 
-| Agent ID | Role | Department |
-|----------|------|------------|
-| `cto-agent` | Chief Technical Officer | Architecture |
-| `producer-agent` | Producer / Project Manager | Management |
-| `backend-agent` | Backend Developer | Development |
-| `fullstack-agent`| Fullstack Developer | Development |
-| `security-agent` | Security Engineer | Specialist |
-| `qa-lead-agent` | QA Lead | Quality |
+| Agent ID | Role | Department | Status (Context) |
+|----------|------|------------|------------------|
+| `cto-agent` | Chief Technical Officer | Architecture | 🟢 Optimal |
+| `producer-agent` | Producer / Project Manager | Management | 🟢 Optimal |
+| `backend-agent` | Backend Developer | Development | 🟢 Optimal |
+| `fullstack-agent`| Fullstack Developer | Development | 🟢 Optimal |
+| `security-agent` | Security Engineer | Specialist | 🟢 Optimal |
+| `qa-lead-agent` | QA Lead | Quality | 🟢 Optimal |
 
 ---
 
