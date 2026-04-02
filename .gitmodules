@@ -1,3 +1,6 @@
 [submodule "Skills/understand-anything"]
 	path = Skills/understand-anything
 	url = https://github.com/Lum1104/Understand-Anything.git
+[submodule "Skills/liteparse"]
+	path = Skills/liteparse
+	url = https://github.com/run-llama/liteparse.git
