@@ -6,6 +6,8 @@ window.promptRegistry.push({
     category: "Debug",
     tags: ["bug", "crash", "runtime", "stack-trace"],
     description: "Dùng để fix lỗi crash, exception hoặc hành vi sai khi chạy.",
+    use_when: ["Có stack trace", "Có hiện tượng tái hiện được"],
+    avoid_when: ["Lỗi compile", "Chưa rõ kiến trúc"],
     fields: [
         { id: "symptom", label: "Hiện tượng (Symptom)", type: "textarea", required: true },
         { id: "expected", label: "Hành vi đúng (Expected)", type: "text", required: true },
@@ -42,10 +44,12 @@ window.promptRegistry.push({
     category: "Debug",
     tags: ["testing", "flaky", "nondeterminism"],
     description: "Điều tra test thỉnh thoảng fail mà không rõ nguyên nhân.",
+    use_when: ["Test fail ngẫu nhiên", "Fail trên CI nhưng pass local"],
+    avoid_when: ["Fail 100% (đó là bug thật)"],
     fields: [
         { id: "test_name", label: "Tên Test", type: "text", required: true },
         { id: "fail_rate", label: "Tần suất fail", type: "text", default: "2/10 lần" },
-        { id: "fail_type", label: "Dấu hiệu", type: "select", options: ["Timeout", "Race Condition", "Data Dependency", "Randomness"] }
+        { id: "fail_type", label: "Dấu hiệu", type: "select", options: ["Timeout", "Race Condition", "Data Dependency", "Randomness"], required: true }
     ],
     template: `Tôi muốn điều tra flaky test {{test_name}}.
 

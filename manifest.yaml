@@ -1,12 +1,14 @@
-# Agent Skill Mapping Manifest
-# Each agent has: id, name, persona (role definition), and skills (tools)
-# All agents also inherit skills from groups.global
-# Task Hub skill (task-hub) is auto-inherited — agents MUST follow Hub protocol
+# ==============================================================================
+# ORCHESTRATOR ROLE & SKILL MANIFEST
+# ==============================================================================
+# CRITICAL: This is a configuration file parsed by `compile_roles.py` for the 
+# V2 Orchestrator (run_orchestrator.py). It is NOT a manual HR directory.
+#
+# The orchestrator's `router` uses this file to build its `role_index.json`.
+# Each entry maps a logical role (e.g. backend) to the AI persona and tools (skills)
+# required to perform that function autonomously.
+# ==============================================================================
 
-# ═══════════════════════════════════════════
-# ACTIVE AGENTS — Only these are loaded per session
-# Edit this list per project to save tokens
-# ═══════════════════════════════════════════
 active_agents:
   - "cto-agent"
   - "backend-agent"

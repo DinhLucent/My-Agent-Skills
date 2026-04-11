@@ -5,6 +5,8 @@ window.promptRegistry.push({
     title: "Xử lý Incident Production",
     category: "Incident",
     tags: ["incident", "hotfix", "ops"],
+    description: "Dành cho xử lý sự cố đang xảy ra trên live.",
+    use_when: ["Downtime", "Data corruption", "Lỗi diện rộng"],
     fields: [
         { id: "symptoms", label: "Triệu chứng", type: "textarea", required: true },
         { id: "impact", label: "Mức độ ảnh hưởng", type: "text", placeholder: "Số lượng user, task bị lỗi..." },
@@ -29,6 +31,9 @@ window.promptRegistry.push({
     id: "incident_hotfix",
     title: "Patch nóng (Hotfix) tối thiểu",
     category: "Incident",
+    tags: ["emergency", "safe-fix"],
+    description: "Đề xuất sửa lỗi nhanh nhưng an toàn tuyệt đối.",
+    use_when: ["Cần fix ngay trong 5-10p"],
     fields: [
         { id: "problem", label: "Sự cố", type: "text", required: true },
         { id: "constraints", label: "Ràng buộc hotfix", type: "text", default: "Không downtime, không đổi schema" }

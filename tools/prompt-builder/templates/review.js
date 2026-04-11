@@ -6,9 +6,11 @@ window.promptRegistry.push({
     category: "Review",
     tags: ["PR", "review", "audit"],
     description: "Đánh giá chi tiết một PR về tính đúng đắn và kiến trúc.",
+    use_when: ["Trước khi merge code", "Review chéo đồng nghiệp"],
+    avoid_when: ["PR chỉ có UI/style", "Fix typo"],
     fields: [
         { id: "pr_goal", label: "Mục tiêu PR", type: "text", required: true },
-        { id: "concerns", label: "Điểm cần soi kỹ", type: "list", placeholder: "Ví dụ: performance, security, logic..." },
+        { id: "concerns", label: "Điểm cần soi kỹ", type: "list", placeholder: "Gõ filter rồi Enter: performance, logic, security..." },
         { id: "strictness", label: "Mức độ khắt khe", type: "select", options: ["Thoải mái (Nitpick only)", "Tiêu chuẩn (Maintainability)", "Sát sao (Correctness critical)"], default: "Tiêu chuẩn (Maintainability)" }
     ],
     template: `Hãy review PR này như một senior reviewer với thái độ: {{strictness}}.
@@ -32,6 +34,9 @@ window.promptRegistry.push({
     category: "Review",
     tags: ["architecture", "audit", "debt"],
     description: "Technical reviewer đánh giá 'mùi' kiến trúc và nợ kỹ thuật.",
+    use_when: ["Review định kỳ quý/tháng", "Trước khi scale dự án"],
+    avoid_when: ["Review code cục bộ"],
+    fields: [],
     template: `Hãy review kiến trúc hiện tại của repo này như một technical reviewer.
 
 Tôi muốn bạn đánh giá:

@@ -9,9 +9,9 @@ window.promptRegistry.push({
     use_when: ["Muốn hiểu framework đang dùng", "Cần vẽ diagram", "Xác định core vs glue code"],
     avoid_when: ["Đã hiểu rõ hệ thống", "Sửa bug nhỏ"],
     fields: [
-        { id: "system_context", label: "Hệ thống / Repo", type: "text", required: true },
-        { id: "core_goal", label: "Mục tiêu cốt lõi", type: "text", required: true },
-        { id: "current_confusion", label: "Phần đang gây rối nhất", type: "textarea" },
+        { id: "system_context", label: "Hệ thống / Repo", type: "text", required: true, placeholder: "Tên repo hoặc domain công việc" },
+        { id: "core_goal", label: "Mục tiêu cốt lõi", type: "text", required: true, placeholder: "Hệ thống này dùng để làm gì?" },
+        { id: "current_confusion", label: "Phần đang gây rối nhất", type: "textarea", placeholder: "Ví dụ: Phần state machine của orchestrator" },
         { id: "constraints", label: "Giới hạn (Constraints)", type: "text", default: "Giữ nguyên kiến trúc hiện tại" }
     ],
     template: `Bối cảnh:
@@ -44,6 +44,8 @@ window.promptRegistry.push({
     category: "Understand",
     tags: ["newcomer", "onboarding", "quick-start"],
     description: "Dùng cho người mới tham gia dự án cần nắm bắt logic nhanh nhất.",
+    use_when: ["Bắt đầu task đầu tiên", "Cần biết file nào quan trọng"],
+    avoid_when: ["Chỉ ghé ngang qua sửa typo"],
     fields: [
         { id: "system_context", label: "Tên Repo", type: "text", required: true },
         { id: "feature_focus", label: "Feature tôi sắp làm", type: "text" }

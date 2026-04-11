@@ -5,6 +5,8 @@ window.promptRegistry.push({
     title: "Viết Handoff Note (Bàn giao)",
     category: "Handoff",
     tags: ["handoff", "knowledge-transfer"],
+    description: "Viết note bàn giao cực kỳ chuyên nghiệp cho đồng nghiệp.",
+    use_when: ["Xong task", "Đi nghỉ phép", "Chuyển dự án"],
     fields: [
         { id: "work_done", label: "Việc đã xong", type: "textarea", required: true },
         { id: "pending", label: "Việc đang dở", type: "textarea" },
@@ -33,6 +35,9 @@ window.promptRegistry.push({
     id: "handoff_task",
     title: "Viết Implementation Task",
     category: "Handoff",
+    tags: ["delegation", "task-split", "agent-task"],
+    description: "Chia nhỏ PRD thành các task code cụ thể.",
+    use_when: ["Giao việc cho sub-agent", "Tạo Ticket Jira/Issue"],
     fields: [
         { id: "context", label: "Bối cảnh nhiệm vụ", type: "textarea", required: true },
         { id: "criteria", label: "Acceptance Criteria", type: "textarea", required: true }

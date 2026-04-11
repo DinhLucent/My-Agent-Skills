@@ -29,27 +29,6 @@
             display: none;
         }
 
-        pre::-webkit-scrollbar {
-            height: 4px;
-            width: 4px;
-        }
-
-        pre::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-        }
-
-        .fade-enter-active,
-        .fade-leave-active {
-            transition: opacity 0.2s, transform 0.2s;
-        }
-
-        .fade-enter-from,
-        .fade-leave-to {
-            opacity: 0;
-            transform: translateY(5px);
-        }
-
         .shake {
             animation: shake 0.4s cubic-bezier(.36, .07, .19, .97) both;
         }
@@ -82,6 +61,17 @@
             border-color: #ef4444 !important;
             box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
         }
+
+        .fade-enter-active,
+        .fade-leave-active {
+            transition: opacity 0.2s, transform 0.2s;
+        }
+
+        .fade-enter-from,
+        .fade-leave-to {
+            opacity: 0;
+            transform: translateY(5px);
+        }
     </style>
 </head>
 
@@ -102,7 +92,7 @@
                 <div class="relative group">
                     <i
                         class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-indigo-400"></i>
-                    <input type="text" v-model="searchQuery" placeholder="Search templates, tags, use cases..."
+                    <input type="text" v-model="searchQuery" placeholder="Search templates, tags, used in..."
                         class="w-full bg-slate-900 border border-white/10 rounded-lg pl-9 pr-4 py-2 text-sm text-gray-200 focus:outline-none focus:border-indigo-500">
                 </div>
             </div>
@@ -147,7 +137,7 @@
                         <p class="text-sm text-gray-400 max-w-2xl">{{selected.description}}</p>
 
                         <div class="mt-6 flex space-x-4">
-                            <div v-if="selected.use_when"
+                            <div v-if="selected.use_when?.length"
                                 class="flex-1 bg-emerald-500/5 border border-emerald-500/10 p-3 rounded-lg">
                                 <span class="text-[10px] font-bold text-emerald-500 uppercase block mb-1">Use
                                     When</span>
@@ -155,7 +145,7 @@
                                     <li v-for="u in selected.use_when">{{u}}</li>
                                 </ul>
                             </div>
-                            <div v-if="selected.avoid_when"
+                            <div v-if="selected.avoid_when?.length"
                                 class="flex-1 bg-rose-500/5 border border-rose-500/10 p-3 rounded-lg">
                                 <span class="text-[10px] font-bold text-rose-500 uppercase block mb-1">Avoid When</span>
                                 <ul class="text-[11px] text-gray-400 list-disc ml-4">
@@ -188,11 +178,11 @@
                                         :placeholder="field.placeholder || 'Type and press Enter'"
                                         :class="['flex-1 bg-slate-900 border border-white/10 rounded-lg p-2 text-sm focus:border-indigo-500 outline-none transition-all', errors[field.id] ? 'error-ring' : '']">
                                     <button @click="addToList(field.id)"
-                                        class="px-4 bg-indigo-600 rounded-lg text-xs font-bold hover:bg-indigo-500 transition-colors">Add</button>
+                                        class="px-4 bg-indigo-600 rounded-lg text-xs font-bold hover:bg-indigo-500">Add</button>
                                 </div>
                                 <div class="flex flex-wrap gap-2">
                                     <span v-for="(item, idx) in listData[field.id]" :key="idx"
-                                        class="bg-slate-800 text-[10px] px-2 py-1 rounded-md flex items-center border border-white/5">
+                                        class="bg-slate-800 text-[10px] px-2 py-1 rounded flex items-center border border-white/5 shadow-sm">
                                         {{item}} <i @click="removeFromList(field.id, idx)"
                                             class="fa-solid fa-times ml-2 cursor-pointer text-gray-500 hover:text-rose-400"></i>
                                     </span>
@@ -201,9 +191,8 @@
                             <div v-else-if="field.type === 'checkbox'">
                                 <label class="flex items-center space-x-3 cursor-pointer group">
                                     <input type="checkbox" v-model="form[field.id]"
-                                        class="w-4 h-4 bg-slate-900 checked:bg-indigo-500 border-white/10 rounded transition-all">
-                                    <span
-                                        class="text-sm text-gray-400 group-hover:text-gray-200 transition-colors font-medium">{{field.label}}
+                                        class="w-4 h-4 bg-slate-900 checked:bg-indigo-500 border-white/10 rounded">
+                                    <span class="text-sm text-gray-400 group-hover:text-gray-200">{{field.label}}
                                         enabled</span>
                                 </label>
                             </div>
@@ -223,12 +212,15 @@
                 <span class="text-xs font-bold text-gray-500 uppercase tracking-widest">Real-time Prompt</span>
                 <button v-if="selected" @click="copy"
                     :class="['px-4 py-2 rounded-lg text-xs font-black transition-all flex items-center', 
-                            Object.keys(errors).length > 0 ? 'shake bg-rose-600 text-white' : (copied ? 'bg-emerald-500 text-white' : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/20')]">
-                    <i v-if="Object.keys(errors).length > 0" class="fa-solid fa-triangle-exclamation mr-2"></i>
-                    {{Object.keys(errors).length > 0 ? 'MISSING FIELDS' : (copied ? 'COPIED!' : 'COPY CLEAN PROMPT')}}
+                            Object.keys(errors).some(k => errors[k]) ? 'shake bg-rose-600 text-white' : (copied ? 'bg-emerald-500 text-white shadow-emerald-500/20 shadow-lg' : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/20')]">
+                    <i v-if="Object.keys(errors).some(k => errors[k])"
+                        class="fa-solid fa-triangle-exclamation mr-2"></i>
+                    {{Object.keys(errors).some(k => errors[k]) ? 'MISSING FIELDS' : (copied ? 'COPIED!' : 'COPY CLEAN
+                    PROMPT')}}
                 </button>
             </div>
-            <div class="flex-1 p-8 overflow-y-auto bg-slate-950 font-mono text-xs leading-relaxed text-indigo-100/70">
+            <div
+                class="flex-1 p-8 overflow-y-auto bg-slate-950 font-mono text-[13px] leading-loose text-indigo-100/70 scrollbar-hide">
                 <div v-if="selected" class="whitespace-pre-wrap">{{generated}}</div>
                 <div v-else class="h-full flex items-center justify-center text-gray-700 italic">Generate your sequence
                     here...</div>
@@ -236,9 +228,10 @@
         </aside>
     </div>
 
-    <!-- Data Registry Entry Points -->
+    <!-- 1. Start Registry Initializer -->
     <script src="data.js"></script>
-    <!-- Individual Domain Scripts (Must load AFTER data.js) -->
+
+    <!-- 2. Load Modular Templates -->
     <script src="templates/understand.js"></script>
     <script src="templates/debug.js"></script>
     <script src="templates/review.js"></script>
@@ -248,12 +241,14 @@
     <script src="templates/refactor.js"></script>
     <script src="templates/handoff.js"></script>
 
+    <!-- 3. Final App Logic -->
     <script>
-        const { createApp, ref, computed, watch, nextTick } = Vue;
+        const { createApp, ref, computed, onMounted } = Vue;
 
         createApp({
             setup() {
-                const templates = ref(window.promptTemplates || []);
+                // Initialize from the global window.promptRegistry populated by scripts above
+                const templates = ref([]);
                 const categories = ['Understand', 'Debug', 'Review', 'Refactor', 'Design', 'Test', 'Handoff', 'Incident'];
                 const searchQuery = ref('');
                 const selected = ref(null);
@@ -262,6 +257,11 @@
                 const tempInput = ref({});
                 const copied = ref(false);
                 const errors = ref({});
+
+                onMounted(() => {
+                    // This ensures all scripts have loaded before assigning to ref
+                    templates.value = window.promptRegistry || [];
+                });
 
                 const filteredTemplates = (cat) => {
                     const q = searchQuery.value.toLowerCase();
@@ -272,7 +272,7 @@
                         const inTitle = t.title.toLowerCase().includes(q);
                         const inTags = t.tags?.some(tag => tag.toLowerCase().includes(q));
                         const inUse = t.use_when?.some(u => u.toLowerCase().includes(q));
-                        const inDesc = t.description.toLowerCase().includes(q);
+                        const inDesc = t.description?.toLowerCase().includes(q);
                         const inFields = t.fields?.some(f => f.label.toLowerCase().includes(q));
                         return inTitle || inTags || inUse || inDesc || inFields;
                     });
@@ -308,7 +308,7 @@
                     if (!selected.value) return '';
                     let tempTemplate = selected.value.template;
 
-                    // First pass: resolve values
+                    // Resolve Values
                     const values = {};
                     selected.value.fields?.forEach(f => {
                         let value = form.value[f.id];
@@ -319,54 +319,60 @@
                         values[f.id] = (value === undefined || (typeof value === 'string' && value.trim() === '')) ? null : value;
                     });
 
-                    // Second pass: line-by-line processing for cleanup
-                    const lines = tempTemplate.split('\n');
-                    const processedLines = lines.filter(line => {
-                        // Find if this line contains a placeholder that is currently empty/null
-                        const placeholders = line.match(/{{(\w+)}}/g);
-                        if (!placeholders) return true;
+                    // Advanced Multi-Pass Cleanup
+                    // Pass 1: Resolve all variables
+                    // Pass 2: Clean orphan labels / bullet points
+                    // Pass 3: Remove empty code fences
 
-                        // Check if ALL placeholders in this line are empty
-                        const allEmpty = placeholders.every(p => {
-                            const key = p.slice(2, -2);
-                            return values[key] === null;
-                        });
+                    let lines = tempTemplate.split('\n');
 
-                        if (allEmpty) {
-                            // Logic: If the line contains other non-whitespace characters besides the placeholder and typical label chars (-, :, *), 
-                            // but no actual content was filled, we likely want to remove the whole label line.
+                    // Detect empty code fences
+                    // We look for patterns like ```[lang]\n{{var}}\n``` where var is null
+                    let textContent = tempTemplate;
+                    selected.value.fields?.forEach(f => {
+                        const key = f.id;
+                        const val = values[key];
 
-                            // Remove placeholder from line to see what's left
-                            let remaining = line;
-                            placeholders.forEach(p => remaining = remaining.replace(p, ''));
-
-                            // If what's left is just labels or formatting, discard the line
-                            const cleanedRemaining = remaining.replace(/[\\s\-:*]*/g, '').trim();
-                            if (cleanedRemaining === '') return false;
+                        // Rule: If placeholder is empty, handle potential line removal
+                        if (val === null) {
+                            // Find lines that are ONLY labels for this placeholder
+                            lines = lines.filter(line => {
+                                if (line.includes(`{{${key}}}`)) {
+                                    // Strip placeholders from line
+                                    let base = line.replace(`{{${key}}}`, '').trim();
+                                    // If what remains is just punctuation or bullet markers, discard line
+                                    if (base === '' || base === ':' || base === '-' || base === '*' || base === '- :' || base === '> :') {
+                                        return false;
+                                    }
+                                }
+                                return true;
+                            });
                         }
+                    });
 
-                        return true;
-                    }).map(line => {
-                        // Final replacement
+                    // Final substitution into cleaned lines
+                    let finalLines = lines.map(line => {
                         let newLine = line;
-                        const linePlaceholders = line.match(/{{(\w+)}}/g);
-                        linePlaceholders?.forEach(p => {
-                            const key = p.slice(2, -2);
-                            newLine = newLine.replace(p, values[key] || '');
+                        selected.value.fields?.forEach(f => {
+                            const val = values[f.id] || '';
+                            newLine = newLine.split(`{{${f.id}}}`).join(val);
                         });
                         return newLine;
                     });
 
-                    // post-processing: remove redundant blank lines
-                    let result = processedLines.join('\n');
-                    // Collapse triple newlines to double newlines
-                    result = result.replace(/\n\n\n+/g, '\n\n');
-                    return result.trim();
+                    let finalOutput = finalLines.join('\n');
+
+                    // Pass 3: Remove empty code fences
+                    // Regular expression for code blocks containing only whitespace or nothing
+                    finalOutput = finalOutput.replace(/```[a-z]*\s*```/gs, '');
+
+                    // Collapse redundant whitespace
+                    return finalOutput.replace(/\n\n\n+/g, '\n\n').trim();
                 });
 
                 const validate = () => {
-                    const missing = [];
                     errors.value = {};
+                    let hasError = false;
                     selected.value.fields?.forEach(f => {
                         if (f.required) {
                             const val = form.value[f.id];
@@ -375,18 +381,15 @@
 
                             if (isListEmpty || isTextEmpty) {
                                 errors.value[f.id] = true;
-                                missing.push(f.label);
+                                hasError = true;
                             }
                         }
                     });
-                    return missing.length === 0;
+                    return !hasError;
                 };
 
                 const copy = async () => {
-                    if (!validate()) {
-                        // Shake effect or feedback
-                        return;
-                    }
+                    if (!validate()) return;
 
                     try {
                         const content = generated.value;

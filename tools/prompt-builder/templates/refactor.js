@@ -5,6 +5,8 @@ window.promptRegistry.push({
     title: "Refactor Sạch (Clean Code)",
     category: "Refactor",
     tags: ["refactor", "clean-code", "quality"],
+    description: "Làm gọn code rườm rà nhưng không đổi logic.",
+    use_when: ["Gặp hàm 300 dòng", "Logic lồng nhau quá sâu"],
     fields: [
         { id: "module", label: "Module/File", type: "text", required: true },
         { id: "issue", label: "Vấn đề (Mùi code)", type: "select", options: ["Code quá dài", "Coupling quá cao", "Dính logic IO/Business", "Khó test"], default: "Code quá dài" }
@@ -23,6 +25,9 @@ window.promptRegistry.push({
     id: "refactor_split",
     title: "Tách Module / Decoupling",
     category: "Refactor",
+    tags: ["modular", "separation"],
+    description: "Tách một file/class khổng lồ thành nhiều phần nhỏ.",
+    use_when: ["Module 'làm cái gì cũng biết'", "File quá 1000 lines"],
     fields: [
         { id: "target", label: "Module khổng lồ", type: "text", required: true },
         { id: "new_boundaries", label: "Dự kiến các phần lẻ", type: "text" }

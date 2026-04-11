@@ -6,9 +6,11 @@ window.promptRegistry.push({
     category: "Design",
     tags: ["redesign", "v2", "spec"],
     description: "Lập spec cho phiên bản nâng cấp hoặc code lại module.",
+    use_when: ["Hệ thống cũ quá tải", "Thêm feature lớn phá vỡ struct cũ"],
+    avoid_when: ["Chỉ cần patch nhỏ"],
     fields: [
-        { id: "current_state", label: "Hệ thống hiện tại", type: "textarea", required: true },
-        { id: "pain_points", label: "Điểm yếu/Nỗi đau", type: "textarea", required: true },
+        { id: "current_state", label: "Hệ thống hiện tại", type: "textarea", required: true, placeholder: "Mô tả struct hiện tại..." },
+        { id: "pain_points", label: "Điểm yếu/Nỗi đau", type: "textarea", required: true, placeholder: "Tại sao cần redesign?" },
         { id: "keep_list", label: "Thứ cần giữ lại", type: "text" }
     ],
     template: `Tôi muốn thiết kế bản V2 cho hệ thống.
@@ -38,6 +40,8 @@ window.promptRegistry.push({
     title: "So sánh phương án kiến trúc",
     category: "Design",
     tags: ["tradeoff", "comparison", "decision"],
+    description: "Phân tích Trade-off giữa hai lựa chọn kỹ thuật.",
+    use_when: ["Chọn giữa 2 framework/lib", "Chọn giữa 2 pattern"],
     fields: [
         { id: "option_a", label: "Phương án A", type: "textarea", required: true },
         { id: "option_b", label: "Phương án B", type: "textarea", required: true }

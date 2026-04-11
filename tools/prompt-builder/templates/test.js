@@ -5,6 +5,8 @@ window.promptRegistry.push({
     title: "Lập Test Plan cho Bug Fix",
     category: "Test",
     tags: ["QA", "testing", "bug-fix"],
+    description: "Thiết kế bộ test case bảo vệ code sau khi sửa bug.",
+    use_when: ["Đã fix xong, muốn verifiy", "Trước khi viết test code"],
     fields: [
         { id: "bug_desc", label: "Mô tả bug", type: "textarea", required: true },
         { id: "behavior", label: "Hành vi đúng", type: "text" }
@@ -25,6 +27,9 @@ window.promptRegistry.push({
     id: "test_coverage",
     title: "Đánh giá Coverage vùng sửa",
     category: "Test",
+    tags: ["quality", "blind-spots"],
+    description: "Kiểm tra xem vùng code quan trọng đã có đủ test chưa.",
+    use_when: ["Refactor code cũ", "Viết code quan trọng"],
     fields: [
         { id: "file_path", label: "File/Module/Function", type: "text", required: true }
     ],
