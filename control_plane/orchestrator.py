@@ -21,7 +21,7 @@ from control_plane.memory.summarize_run import RunSummarizer
 from control_plane.memory.store_decisions import DecisionStore
 from control_plane.hooks.pre_task import PreTaskHook
 from control_plane.hooks.post_task import PostTaskHook
-from control_plane.hooks.on_verification_fail import OnVerificationFailHook
+from control_plane.hooks.on_verification_fail import on_verification_fail
 
 
 @dataclass
@@ -65,7 +65,7 @@ class Orchestrator:
         self.decision_store = DecisionStore(config.knowledge_dir / "memory")
         self.pre_task_hook = PreTaskHook(config.repo_root)
         self.post_task_hook = PostTaskHook()
-        self.on_fail_hook = OnVerificationFailHook()
+        # on_verification_fail is a module-level function, not a class
 
     def run_task(self, task: dict[str, Any], session_id: str) -> dict[str, Any]:
         """Full task lifecycle: classify → route → retrieve → packet → verify → memory."""
@@ -78,7 +78,7 @@ class Orchestrator:
 
         # ── Step 2: Route ───────────────────────────────────
         routing = self.router.route(task, classification)
-        parallelism = self.parallel_policy.evaluate(classification, routing)
+        execution_mode = self.parallel_policy.decide(task, classification, routing)
 
         # ── Step 3: Retrieve ────────────────────────────────
         context_bundle = self.retriever.retrieve(task, classification, routing)
@@ -99,7 +99,7 @@ class Orchestrator:
             "status": "pending_execution",
             "task_packet_path": str(task_packet_path),
             "assigned_role": routing["primary_role"],
-            "mode": routing["mode"],
+            "mode": execution_mode["mode"],
         }
 
         # ── Step 6: Store decision ──────────────────────────
@@ -107,7 +107,7 @@ class Orchestrator:
             "action": "task_packet_generated",
             "classification": classification,
             "routing": routing,
-            "parallelism": parallelism,
+            "execution_mode": execution_mode,
         })
 
         # ── Step 7: Summarize ───────────────────────────────
@@ -128,11 +128,22 @@ class Orchestrator:
             "pre_task": pre_result,
             "classification": classification,
             "routing": routing,
-            "parallelism": parallelism,
+            "execution_mode": execution_mode,
             "task_packet_path": str(task_packet_path),
             "summary": summary,
             "post_task": post_result,
         }
+
+    def handle_verification_failure(
+        self, task_packet_path: Path, verification_report_path: Path, attempt: int = 1,
+    ) -> dict[str, Any]:
+        """Handle verification failure with minimal context retry."""
+        return on_verification_fail(
+            repo_root=self.config.repo_root,
+            task_packet_path=task_packet_path,
+            verification_report_path=verification_report_path,
+            attempt=attempt,
+        )
 
     def run_verification(
         self, task: dict[str, Any], execution_result: dict[str, Any]

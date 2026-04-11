@@ -1,7 +1,7 @@
-"""Parallel Policy — Decides when multi-agent execution is allowed.
+"""Parallel Policy — Decides solo / paired / directed_swarm execution mode.
 
-Default: solo. Only escalates to paired or directed swarm
-when risk/task-size thresholds are met.
+Conservative by default. Never opens multi-agent unless risk, complexity,
+or release sensitivity demands it.
 """
 from __future__ import annotations
 
@@ -9,29 +9,84 @@ from typing import Any
 
 
 class ParallelPolicy:
-    """Gate for multi-agent execution — never the default."""
+    """
+    Decide whether a task should run in solo, paired, or directed_swarm mode.
+    Keep this conservative by default to avoid context/token waste.
+    """
 
-    # Maximum agents per mode
-    MODE_LIMITS = {
-        "solo": 1,
-        "paired": 2,
-        "directed_swarm": 5,
-    }
+    def decide(
+        self,
+        task: dict[str, Any],
+        classification: dict[str, Any],
+        routing: dict[str, Any],
+    ) -> dict[str, Any]:
+        task_type = classification.get("task_type", "unknown")
+        risk_level = classification.get("risk_level", "medium")
+        description = (task.get("description") or "").lower()
+        constraints = task.get("constraints", [])
+        related_paths = task.get("inputs", {}).get("related_paths", [])
 
-    def evaluate(self, classification: dict[str, Any], routing: dict[str, Any]) -> dict[str, Any]:
-        mode = routing.get("mode", "solo")
-        max_agents = self.MODE_LIMITS.get(mode, 1)
+        multi_module = len({self._top_level_group(p) for p in related_paths if p}) > 1
+        mentions_security = any(
+            word in description for word in ["security", "auth", "permission", "token"]
+        )
+        mentions_release = any(
+            word in description for word in ["release", "deploy", "production", "rollout"]
+        )
 
+        # ── Directed swarm: release or high-risk multi-module ────
+        if mentions_release or (risk_level == "high" and multi_module):
+            return {
+                "mode": "directed_swarm",
+                "primary_role": routing["primary_role"],
+                "secondary_roles": self._merge_roles(
+                    routing.get("secondary_roles", []),
+                    ["reviewer", "qa", "security"],
+                ),
+                "reason": "high-risk multi-module or release-sensitive work",
+            }
+
+        # ── Paired: high risk, security, refactor, or many constraints ─
+        if (
+            risk_level == "high"
+            or mentions_security
+            or task_type in {"refactor", "incident"}
+            or len(constraints) >= 3
+        ):
+            return {
+                "mode": "paired",
+                "primary_role": routing["primary_role"],
+                "secondary_roles": self._merge_roles(
+                    routing.get("secondary_roles", []),
+                    ["reviewer"],
+                ),
+                "reason": "moderate/high-risk task requiring independent review",
+            }
+
+        # ── Solo: default conservative execution ─────────────────
         return {
-            "mode": mode,
-            "max_agents": max_agents,
-            "parallel_allowed": mode != "solo",
-            "reason": self._reason(mode, classification),
+            "mode": "solo",
+            "primary_role": routing["primary_role"],
+            "secondary_roles": [],
+            "reason": "default conservative execution",
         }
 
-    def _reason(self, mode: str, classification: dict[str, Any]) -> str:
-        if mode == "solo":
-            return "Low/medium risk, single-role task"
-        if mode == "paired":
-            return f"Risk={classification['risk_level']}, adding reviewer/qa"
-        return f"High risk ({classification['risk_level']}), directed swarm with full review chain"
+    # ── Helpers ──────────────────────────────────────────────
+
+    def _merge_roles(self, base: list[str], extra: list[str]) -> list[str]:
+        seen: list[str] = []
+        for role in [*base, *extra]:
+            if role not in seen:
+                seen.append(role)
+        return seen
+
+    def _top_level_group(self, path: str) -> str:
+        parts = [p for p in path.split("/") if p]
+        if len(parts) >= 2:
+            return "/".join(parts[:2])
+        return path
+
+    # Legacy compat — old code calls evaluate()
+    def evaluate(self, classification: dict[str, Any], routing: dict[str, Any]) -> dict[str, Any]:
+        """Thin wrapper for backward compatibility."""
+        return self.decide(task={}, classification=classification, routing=routing)
