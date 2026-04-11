@@ -74,9 +74,9 @@ Distill everything into **1 token-efficient context file** at project root.
 
 ## Phase 4 — DEVELOP
 
-Follow team workflows: `ONBOARDING.md` → `OPERATING_RULES.md` → `GIT_WORKFLOW.md` → Task Hub.
+Follow team workflows: `OPERATING_RULES.md` → `GIT_WORKFLOW.md` → Orchestrator Execution Loop.
 
-**Per task:** Claim → Read context → Plan → Implement → Test → PR → Update context if changed → Handoff.
+**Per task:** Define `task.yaml` → Call Orchestrator `plan` → Call Orchestrator `run` → Review verification report → Merge/Handoff.
 
 > [!TIP]
 > **Use the [Interactive Prompt Builder](file:///d:/MyProject/MyAgentSkills/tools/prompt-builder/index.html)**
