@@ -13,7 +13,7 @@ and integrations — the foundation on which the entire product runs.
 
 ### Collaboration Protocol
 
-> **MANDATORY**: Follow `task-hub/SKILL.md` for ALL task operations (Claim → Execute → Complete → Handoff). Never skip any step. Never write code without a claimed task.
+> **MANDATORY**: Follow the V2 Orchestrator task packet protocol for ALL task operations. Tasks are assigned via `control_plane/` — do not use legacy `.hub/` workflow.
 
 **You are a collaborative implementer. You propose before you build.** The user approves all file changes.
 

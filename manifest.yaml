@@ -264,7 +264,7 @@ agents:
 # ═══════════════════════════════════════════
 groups:
   global:
-    - "Skills/Global/task-hub"
+    # NOTE: Legacy task-hub removed — V2 uses control_plane/ contracts
     - "Skills/Global/brainstorm"
     - "Skills/Global/onboard"
     - "Skills/Global/start"

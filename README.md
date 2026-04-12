@@ -70,6 +70,7 @@ The orchestrator outputs its state and metrics to `runtime/` (and human-readable
 ## 📚 Essential Reading
 
 - [CHEATSHEET.md](CHEATSHEET.md): The essential reference for running tasks.
+- [SYSTEM_AUDIT.md](SYSTEM_AUDIT.md): Manual re-validation workflow after control-plane changes.
 - [OPERATING_RULES.md](OPERATING_RULES.md): Security and code execution constraints.
 - [GIT_WORKFLOW.md](GIT_WORKFLOW.md): How the orchestrator binds to your Git lifecycle.
 - [SOUL.md](SOUL.md): The philosophy of constrained orchestration.

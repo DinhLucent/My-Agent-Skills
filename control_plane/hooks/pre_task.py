@@ -21,14 +21,17 @@ class PreTaskHook:
         """Check caches and recompile if stale."""
         actions: list[str] = []
 
+        # Required by runtime execution path
         if not (self.compiled_dir / "role_index.json").exists():
             actions.append("role_index_missing")
-        if not (self.compiled_dir / "skill_index.json").exists():
-            actions.append("skill_index_missing")
-        if not (self.compiled_dir / "project_index.json").exists():
-            actions.append("project_index_missing")
         if not (self.compiled_dir / "module_index.json").exists():
             actions.append("module_index_missing")
+
+        # Optional — not on critical runtime path
+        if not (self.compiled_dir / "skill_index.json").exists():
+            actions.append("skill_index_missing_optional")
+        if not (self.compiled_dir / "project_index.json").exists():
+            actions.append("project_index_missing_optional")
 
         self._hydrate_dashboard()
         actions.append("dashboard_snapshot_hydrated")

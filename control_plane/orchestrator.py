@@ -8,16 +8,16 @@ from typing import Any
 
 from control_plane.classifier.task_classifier import TaskClassifier
 from control_plane.context_builder.packet_builder import PacketBuilder
-from control_plane.context_builder.prompt_budget import PromptBudget
+from control_plane.legacy_experimental.prompt_budget import PromptBudget
 from control_plane.contracts import DEFAULT_CONTRACT_VALIDATOR
 from control_plane.execution import AgentExecutor, ExecutionPlanner, TaskStateMachine
 from control_plane.hooks.on_handoff import OnHandoffHook
 from control_plane.hooks.on_verification_fail import on_verification_fail
 from control_plane.hooks.post_task import PostTaskHook
 from control_plane.hooks.pre_task import PreTaskHook
-from control_plane.memory.store_decisions import DecisionStore
-from control_plane.memory.summarize_run import RunSummarizer
-from control_plane.retriever.knowledge_retriever import KnowledgeRetriever
+from control_plane.legacy_experimental.memory.store_decisions import DecisionStore
+from control_plane.legacy_experimental.memory.summarize_run import RunSummarizer
+from control_plane.legacy_experimental.retriever.knowledge_retriever import KnowledgeRetriever
 from control_plane.router.parallel_policy import ParallelPolicy
 from control_plane.router.role_router import RoleRouter
 from control_plane.runtime_metrics import RuntimeMetricsLogger

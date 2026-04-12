@@ -43,9 +43,7 @@ runtime/state/
 runtime/cache/
 runtime/sessions/
 runtime/reports/
-.hub/active/*.json
-.hub/done/*.json
-.hub/handoffs/*.json
+.hub/
 
 # Control Plane - Compiled knowledge (regenerable via `python run_orchestrator.py compile`)
 knowledge/compiled/

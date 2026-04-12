@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import shutil
 from pathlib import Path
 from typing import Any
 
@@ -11,6 +12,7 @@ _DOC_FILES: list[str] = [
     "OPERATING_RULES.md",
     "DASHBOARD.md",
     "SOUL.md",
+    "SYSTEM_AUDIT.md",
     "ONBOARDING.md",
     "REFERENCE.md",
     "CHEATSHEET.md",
@@ -25,6 +27,10 @@ def compile_docs(repo_root: Path) -> list[Path]:
     """Compile markdown docs into JSON summaries and fragments."""
     compiled_dir = repo_root / "knowledge" / "compiled"
     fragments_dir = compiled_dir / "context_fragments"
+
+    # Clean rebuild: purge stale fragments before regenerating
+    if fragments_dir.exists():
+        shutil.rmtree(fragments_dir)
     compiled_dir.mkdir(parents=True, exist_ok=True)
     fragments_dir.mkdir(parents=True, exist_ok=True)
 
