@@ -12,6 +12,8 @@ _DOC_FILES: list[str] = [
     "OPERATING_RULES.md",
     "DASHBOARD.md",
     "SOUL.md",
+    "BOOTSTRAP_SHIELD.md",
+    "PROMPT_PACK.md",
     "SYSTEM_AUDIT.md",
     "ONBOARDING.md",
     "REFERENCE.md",

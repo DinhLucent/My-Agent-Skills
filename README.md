@@ -157,6 +157,8 @@ python run_orchestrator.py run tests/fixtures/audit/hard_fail.yaml
 
 | Document | Purpose |
 |----------|---------|
+| [BOOTSTRAP_SHIELD.md](BOOTSTRAP_SHIELD.md) | Step-by-step guide for applying SHIELD to another repository |
+| [PROMPT_PACK.md](PROMPT_PACK.md) | Reusable prompts for onboarding, debug, planning, build tasks, and role-specific sessions |
 | [CHEATSHEET.md](CHEATSHEET.md) | Quick reference for running tasks |
 | [SYSTEM_AUDIT.md](SYSTEM_AUDIT.md) | Re-validation workflow after changes |
 | [OPERATING_RULES.md](OPERATING_RULES.md) | Security and execution constraints |

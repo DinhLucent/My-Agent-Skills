@@ -226,6 +226,31 @@
                                 </ul>
                             </div>
                         </div>
+
+                        <div v-if="activeModelRecommendation" class="mt-6 max-w-4xl">
+                            <div class="p-5 rounded-2xl bg-indigo-500/5 border border-indigo-500/10">
+                                <div class="flex items-center space-x-2 mb-4">
+                                    <i class="fa-solid fa-microchip text-indigo-400 text-xs"></i>
+                                    <span class="text-[11px] font-extrabold text-indigo-400 uppercase tracking-widest">Recommended Models</span>
+                                    <span class="text-[10px] text-slate-500 font-mono">2026-04-12</span>
+                                </div>
+                                <div class="grid grid-cols-1 gap-3 text-xs">
+                                    <div class="premium-card rounded-xl p-4">
+                                        <div class="text-[10px] font-black text-slate-500 uppercase tracking-[2px] mb-2">Best Quality</div>
+                                        <div class="text-slate-200 leading-relaxed">{{activeModelRecommendation.quality}}</div>
+                                    </div>
+                                    <div class="premium-card rounded-xl p-4">
+                                        <div class="text-[10px] font-black text-slate-500 uppercase tracking-[2px] mb-2">Best Default</div>
+                                        <div class="text-slate-200 leading-relaxed">{{activeModelRecommendation.default}}</div>
+                                    </div>
+                                    <div class="premium-card rounded-xl p-4">
+                                        <div class="text-[10px] font-black text-slate-500 uppercase tracking-[2px] mb-2">Fast / Budget</div>
+                                        <div class="text-slate-200 leading-relaxed">{{activeModelRecommendation.budget}}</div>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-slate-400 leading-relaxed mt-4">{{activeModelRecommendation.note}}</p>
+                            </div>
+                        </div>
                     </header>
 
                     <!-- Scrollable Form Fields -->
@@ -357,6 +382,9 @@
     <script src="templates/incident.js"></script>
     <script src="templates/test.js"></script>
     <script src="templates/refactor.js"></script>
+    <script src="templates/planning.js"></script>
+    <script src="templates/build.js"></script>
+    <script src="templates/role.js"></script>
     <script src="templates/handoff.js"></script>
 
     <!-- App Logic -->
@@ -366,7 +394,7 @@
         createApp({
             setup() {
                 const templates = ref([]);
-                const categories = ['Understand', 'Debug', 'Review', 'Refactor', 'Design', 'Test', 'Handoff', 'Incident'];
+                const categories = ['Understand', 'Debug', 'Review', 'Refactor', 'Design', 'Planning', 'Build', 'Role', 'Test', 'Handoff', 'Incident'];
                 const searchQuery = ref('');
                 const selected = ref(null);
                 const form = ref({});
@@ -448,6 +476,11 @@
                     return textContent.replace(/\n\n\n+/g, '\n\n').trim();
                 });
 
+                const activeModelRecommendation = computed(() => {
+                    if (!selected.value) return null;
+                    return selected.value.model_recommendation || window.modelRecommendations?.[selected.value.category] || null;
+                });
+
                 const hasErrors = computed(() => Object.keys(errors.value).some(k => errors.value[k]));
                 const copyBtnText = computed(() => hasErrors.value ? 'REMAINING FIELDS' : (copied.value ? 'COPIED TO CLIPBOARD' : 'COPY PROMPT'));
 
@@ -491,7 +524,7 @@
                 return {
                     categories, templates, searchQuery, selected, form, listData, tempInput, errors,
                     filteredTemplates, selectTemplate, addToList, removeFromList, generated, copy, copied,
-                    hasErrors, copyBtnText
+                    hasErrors, copyBtnText, activeModelRecommendation
                 };
             }
         }).mount('#app');
