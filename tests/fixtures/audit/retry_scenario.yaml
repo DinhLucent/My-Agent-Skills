@@ -1,43 +1,48 @@
 # Audit Fixture: Retry Scenario
-# Scenario: Medium-risk task that fails verification once, then passes on retry.
+# Scenario: First attempt writes incomplete file (fails acceptance),
+#           retry writes correct file (passes).
+# Run: python run_orchestrator.py run tests/fixtures/audit/retry_scenario.yaml
 
 schema_version: "2.1"
 id: AUDIT-RETRY-001
-title: "Add input validation to user registration endpoint"
+title: "Write validated output with retry correction"
 description: >
-  Add email format validation and password strength check to the
-  POST /api/users/register endpoint. First attempt likely misses
-  edge cases caught by security checker.
+  First attempt creates output with a known validation gap.
+  Retry attempt produces the correct, complete output.
+  Tests the verify→retry→pass loop.
 assigned_role: backend
 priority: medium
 status: queued
-domain: auth
+domain: general
 
 inputs:
   related_paths:
-    - src/api/users/register.py
-    - src/validators/email.py
-  related_tests:
-    - tests/api/test_register.py
-    - tests/validators/test_email.py
+    - runtime/sessions/audit_retry.txt
+  related_tests: []
   related_handoffs: []
   related_logs: []
-  related_modules:
-    - src/api/users
-    - src/validators
+  related_modules: []
 
 constraints:
   - preserve_existing_api_contract
-  - no_breaking_changes
 
 acceptance_criteria:
-  - email format is validated before saving
-  - password must be >= 8 chars with mixed case
-  - clear error messages returned for each validation failure
-  - security checker passes
+  - output file runtime/sessions/audit_retry.txt exists
+  - file contains the string VALIDATED
 
 metadata:
   fixture_type: retry_scenario
   expected_outcome: passed_after_retry
   expected_attempts: 2
-  expected_failure_reason: security_check_failed
+  execution:
+    primary_commands:
+      - "New-Item -ItemType Directory -Path 'runtime/sessions' -Force | Out-Null; Set-Content -Path 'runtime/sessions/audit_retry.txt' -Value 'AUDIT-RETRY-001 draft — PENDING' -Encoding utf8"
+    retry_commands:
+      - "Set-Content -Path 'runtime/sessions/audit_retry.txt' -Value 'AUDIT-RETRY-001 final — VALIDATED' -Encoding utf8"
+    output_files:
+      - runtime/sessions/audit_retry.txt
+    satisfied_criteria:
+      - output file runtime/sessions/audit_retry.txt exists
+    retry_satisfied_criteria:
+      - output file runtime/sessions/audit_retry.txt exists
+      - file contains the string VALIDATED

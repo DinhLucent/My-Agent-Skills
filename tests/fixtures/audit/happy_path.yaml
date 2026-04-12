@@ -1,12 +1,13 @@
 # Audit Fixture: Happy Path
-# Scenario: Simple bugfix that passes verification on first attempt.
+# Scenario: Simple file creation that passes verification on first attempt.
+# Run: python run_orchestrator.py run tests/fixtures/audit/happy_path.yaml
 
 schema_version: "2.1"
 id: AUDIT-HAPPY-001
-title: "Fix typo in API error message"
+title: "Create a simple output file"
 description: >
-  Simple bugfix that corrects a typo in the error response for the
-  /api/auth/login endpoint. Low-risk, single-file change.
+  Minimal task that writes a known string to an output file.
+  Designed to pass all verification checks on first attempt.
 assigned_role: backend
 priority: low
 status: queued
@@ -14,22 +15,28 @@ domain: general
 
 inputs:
   related_paths:
-    - src/api/auth/login.py
-  related_tests:
-    - tests/api/test_login.py
+    - runtime/sessions/audit_happy.txt
+  related_tests: []
   related_handoffs: []
   related_logs: []
-  related_modules:
-    - src/api/auth
+  related_modules: []
 
 constraints:
   - minimal_change_only
 
 acceptance_criteria:
-  - error message reads "Invalid credentials" instead of "Invald credentials"
-  - existing tests still pass
+  - output file runtime/sessions/audit_happy.txt exists
+  - file contains expected content
 
 metadata:
   fixture_type: happy_path
   expected_outcome: passed_on_first_attempt
   expected_attempts: 1
+  execution:
+    primary_commands:
+      - "New-Item -ItemType Directory -Path 'runtime/sessions' -Force | Out-Null; Set-Content -Path 'runtime/sessions/audit_happy.txt' -Value 'AUDIT-HAPPY-001 completed successfully' -Encoding utf8"
+    output_files:
+      - runtime/sessions/audit_happy.txt
+    satisfied_criteria:
+      - output file runtime/sessions/audit_happy.txt exists
+      - file contains expected content
